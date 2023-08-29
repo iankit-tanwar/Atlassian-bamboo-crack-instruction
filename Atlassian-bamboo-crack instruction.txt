@@ -1,0 +1,50 @@
+1  Create a Docker Volume:
+
+        docker volume create --name bambooVolume
+
+2  Run the Bamboo Container:
+        docker run -v bambooVolume:/var/atlassian/application-data/bamboo --name bamboo -d -p 8085:8085 -p 54663:54663 atlassian/bamboo:9.3.2
+
+3 Go inside the Container
+ 
+        docker exec -it contanerName /bin/bash
+
+4 Update Package Lists:
+        
+       apt-get update
+
+       apt-get install vim -y
+
+
+5 Command to Search:
+
+     find / -type f -name setenv.sh 2>/dev/null
+
+6 Configure Bamboo Java Agent:
+
+      vim setenv.sh
+
+      Edit the setenv.sh file and add the following line:
+     
+      export JAVA_OPTS="$JAVA_OPTS -javaagent:/opt/atlassian-agent/atlassian-agent.jar"
+
+
+7 Activate Confluence:
+   cd /opt
+   mkdir atlassian-agent
+   cd atlassian-agent
+
+   pwd 
+   
+   docker cp atlassian-agent.jar 4baaad68637c:/opt/atlassian-agent
+   Successfully copied 976kB to 4baaad68637c:/opt/atlassian-agent
+
+   chmod 777 atlassian-agent.jar
+
+    apt update
+    apt install default-jre default-jdk
+
+
+
+  java -jar /opt/atlassian-agent/atlassian-agent.jar -m email@gmail.com -o password -p bamboo -s BSI1-KSO7-OV33-I7F7
+
